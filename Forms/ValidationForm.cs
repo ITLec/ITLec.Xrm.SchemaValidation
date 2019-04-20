@@ -16,15 +16,17 @@ namespace ITLec.Xrm.SchemaValidation.Forms
     public partial class ValidationForm : Form
     {
         string _xsdValidationStr = "";
-        public ValidationForm(string xsdValidationStr)
+        private string _XsdFolder;
+
+        public ValidationForm(string xsdValidationStr, string xsdFolder)
         {
             InitializeComponent();
             _xsdValidationStr = xsdValidationStr;
-
+            _XsdFolder = xsdFolder;
             Size = new Size(Size.Width + 1, Size.Height);
         }
 
-        public string ValidateXmlAginstXsd(string xmlStr, string xsdStr)
+        public string ValidateXmlAginstXsd(string xmlStr, string xsdStr, string xsdFolder)
         {
 
 
@@ -33,7 +35,47 @@ namespace ITLec.Xrm.SchemaValidation.Forms
             System.Xml.Schema.XmlSchema schema = System.Xml.Schema.XmlSchema.Read(new StringReader(xsdStr), ValidateSchema);
             //  schema.R.Read();
             xml.Schemas.Add(schema);
-            try
+
+
+            var regExBetween = new System.Text.RegularExpressions.Regex(@"schemaLocation=""(.*\.xsd)""");
+            var matchBetween = regExBetween.Match(xsdStr);
+            if (matchBetween.Success)
+            {
+                foreach (System.Text.RegularExpressions.Group group in matchBetween.Groups)
+
+                {
+                    if (!group.Value.Contains("schemaLocation"))
+                    {
+                        xml.Schemas.Add(null, xsdFolder + "\\" + group.Value.Replace("\"", ""));
+                    }
+                }
+            }
+
+                try
+            {
+                xml.Validate(null);
+            }
+            catch (Exception exe)
+            {
+                return exe.Message;
+            }
+
+            return "";
+        }
+        public string ValidateXmlAginstXsdFolder(string xmlStr, string xsdFolder)
+        {
+
+
+            XmlDocument xml = new XmlDocument();
+            xml.LoadXml(xmlStr);
+
+            foreach (var schemaFilePath in System.IO.Directory.EnumerateFiles(xsdFolder).Where(e => e.EndsWith(".xsd")))
+            {
+                xml.Schemas.Add(null, schemaFilePath);
+            }
+
+                ///       xml.Schemas.Add(schema);
+                try
             {
                 xml.Validate(null);
             }
@@ -54,7 +96,7 @@ namespace ITLec.Xrm.SchemaValidation.Forms
         {
             try
             {
-                string validationStr = ValidateXmlAginstXsd(txtXml.Text, _xsdValidationStr);
+                string validationStr = ValidateXmlAginstXsd(txtXml.Text, _xsdValidationStr, _XsdFolder);
 
                 if (!string.IsNullOrEmpty(validationStr))
                 {
@@ -74,6 +116,11 @@ namespace ITLec.Xrm.SchemaValidation.Forms
 
             //this.DialogResult = DialogResult.OK;
             //this.Close();
+        }
+
+        private string ValidateXmlAginstXsd(string text, string xsdValidationStr, object xsdFolder)
+        {
+            throw new NotImplementedException();
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)

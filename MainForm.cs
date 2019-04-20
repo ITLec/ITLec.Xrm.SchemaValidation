@@ -60,6 +60,7 @@ namespace ITLec.Xrm.SchemaValidation
             {
                 string folderName = schemaDirectory.Replace(schemaParentDirectory, "").Replace("\\", "");
                 TreeNode node = new TreeNode(folderName);
+                node.Tag = schemaDirectory;
                 foreach (var schemaFilePath in System.IO.Directory.EnumerateFiles(schemaDirectory).Where(e=>e.EndsWith(".xsd")))
                 {
                     string subNodeName = schemaFilePath.Replace(schemaDirectory, "").Replace("\\", "").Replace(".xsd", "");
@@ -72,15 +73,15 @@ namespace ITLec.Xrm.SchemaValidation
                 tvSchema.Nodes.Add(node);
             }
         }
-
+        TreeNode SelectedNode = null;
         private void tvSchema_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
 
-            TreeNode selectedNode = e.Node;
-            selectedNode.TreeView.SelectedNode = selectedNode;
-            if (selectedNode.Tag != null)
+             SelectedNode = e.Node;
+            SelectedNode.TreeView.SelectedNode = SelectedNode;
+            if (SelectedNode.Tag != null && SelectedNode.Tag.ToString().EndsWith(".xsd"))
             {
-                string xsdPath = selectedNode.Tag.ToString();
+                string xsdPath = SelectedNode.Tag.ToString();
 
 
                 txtXsd.Text = IndentXmlFile(xsdPath);
@@ -133,10 +134,23 @@ namespace ITLec.Xrm.SchemaValidation
 
         private void toolStripButtonValidate_Click(object sender, EventArgs e)
         {
-            var validationForm =new ValidationForm(txtXsd.Text);
+            if (SelectedNode != null && SelectedNode.Tag.ToString().EndsWith(".xsd"))
+            {
+                string xsdFolder = (SelectedNode.Tag.ToString().EndsWith(".xsd")) ? SelectedNode.Parent.Tag.ToString() : SelectedNode.Tag.ToString();
+                var validationForm = new ValidationForm(txtXsd.Text, xsdFolder);
 
-            //    validationForm.ShowDialog();
-            validationForm.Show();
+                //    validationForm.ShowDialog();
+                validationForm.Show();
+
+            }
+            //if (_SelectedNode != null)
+            //{
+            //    string xsdFolder = (_SelectedNode.Tag.ToString().EndsWith(".xsd")) ? _SelectedNode.Parent.Tag.ToString() : _SelectedNode.Tag.ToString();
+            //    var validationForm = new ValidationForm(xsdFolder);
+
+            //    //    validationForm.ShowDialog();
+            //    validationForm.Show();
+            //}
         }
 
         private void txtXsd_Load(object sender, EventArgs e)

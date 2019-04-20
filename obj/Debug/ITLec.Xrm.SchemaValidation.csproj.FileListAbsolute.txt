@@ -55,7 +55,6 @@ C:\Work\ITLec\ITLec.XrmSchemaValidation\ITLec.Xrm.SchemaValidation\bin\Debug\Mic
 C:\Work\ITLec\ITLec.XrmSchemaValidation\ITLec.Xrm.SchemaValidation\bin\Debug\Microsoft.Xrm.Sdk.Deployment.xml
 C:\Work\ITLec\ITLec.XrmSchemaValidation\ITLec.Xrm.SchemaValidation\bin\Debug\Microsoft.Xrm.Sdk.Workflow.xml
 C:\Work\ITLec\ITLec.XrmSchemaValidation\ITLec.Xrm.SchemaValidation\bin\Debug\Microsoft.Xrm.Tooling.Connector.xml
-C:\Work\ITLec\ITLec.XrmSchemaValidation\ITLec.Xrm.SchemaValidation\obj\Debug\ITLec.Xrm.SchemaValidation.csprojResolveAssemblyReference.cache
 C:\Work\ITLec\ITLec.XrmSchemaValidation\ITLec.Xrm.SchemaValidation\obj\Debug\ITLec.Xrm.SchemaValidation.Forms.ErrorList.resources
 C:\Work\ITLec\ITLec.XrmSchemaValidation\ITLec.Xrm.SchemaValidation\obj\Debug\ITLec.Xrm.SchemaValidation.Forms.ValidationForm.resources
 C:\Work\ITLec\ITLec.XrmSchemaValidation\ITLec.Xrm.SchemaValidation\obj\Debug\ITLec.Xrm.SchemaValidation.Forms.XmlContentDisplayDialog.resources

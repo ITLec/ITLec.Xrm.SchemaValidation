@@ -145,7 +145,6 @@
     <Compile Include="Helpers\MultipleRetrieveHelper.cs" />
     <Compile Include="Helpers\ReadWriteCsv.cs" />
     <Compile Include="Helpers\StatusHelper.cs" />
-    <Compile Include="Helpers\ViewHelper.cs" />
     <Compile Include="Helpers\XmlFoldingStrategy.cs" />
     <Compile Include="Helpers\XmlHelper.cs" />
     <Compile Include="ListViewEx.cs">
